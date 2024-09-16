@@ -9,3 +9,5 @@ export {default as FlaskRegular} from '../assets/icons/flask-regular.svg';
 export {default as FlaskSolid} from '../assets/icons/flask-solid.svg';
 export {default as FormSolid} from './../assets/icons/form-solid.svg';
 export {default as FormRegular} from './../assets/icons/form-regular.svg';
+export {default as MenuRegular} from './../assets/icons/menu-regular.svg';
+export {default as CloseSolid} from './../assets/icons/close-solid.svg';

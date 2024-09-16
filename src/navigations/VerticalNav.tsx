@@ -7,6 +7,7 @@ import {jwtManager} from '../helps/jwtManager';
 import {clearUser} from '../redux/userReducer/userSlice';
 import {styles} from '../assets/styles/styles.module';
 import {primaryBgColor} from '../constants/colors';
+import {CloseSolid, MenuRegular, UserSolid} from '../constants/icons.tsx';
 
 export default function VerticalNav() {
   const verticalNav = useSelector(selectVerticalNav);
@@ -33,7 +34,6 @@ export default function VerticalNav() {
                   position: 'absolute',
                   top: 0,
                   left: 0,
-                  zIndex: 999,
                   marginTop: 10,
                   marginLeft: 5,
                   marginHorizontal: 5,
@@ -44,33 +44,28 @@ export default function VerticalNav() {
                 <View
                   style={[
                     {
-                      padding: 3,
-                      paddingHorizontal: 15,
-                      backgroundColor: `${primaryBgColor}`,
+                      height: 37,
+                      width: 37,
                       borderRadius: 8,
+                      backgroundColor: `${primaryBgColor}`,
                     },
+                    styles.justMiddle,
                   ]}>
-                  {/*<FontAwesomeIcon*/}
-                  {/*  color="white"*/}
-                  {/*  size={25}*/}
-                  {/*  icon={faArrowAltCircleLeft}*/}
-                  {/*/>*/}
+                  <CloseSolid width={'100%'} />
                 </View>
               </TouchableOpacity>
               <TouchableOpacity>
                 <View style={[styles.navItem]}>
-                  {/*<FontAwesomeIcon color="black" size={32} icon={faUser} />*/}
                   <Text style={[styles.txtSecondaryColor]}>Tài khoản</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   dispatch(setVerticalNav(!verticalNav));
-                  navigate('Invoice');
+                  navigate('Borrows');
                 }}>
                 <View style={[styles.navItem]}>
-                  {/*<FontAwesomeIcon color="black" size={32} icon={faUser} />*/}
-                  <Text style={[styles.txtSecondaryColor]}>Hóa đơn</Text>
+                  <Text style={[styles.txtSecondaryColor]}>Phiếu mượn</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
@@ -78,13 +73,11 @@ export default function VerticalNav() {
                   navigate('Statistic');
                 }}>
                 <View style={[styles.navItem]}>
-                  {/*<FontAwesomeIcon color="black" size={32} icon={faUser} />*/}
                   <Text style={[styles.txtSecondaryColor]}>Thống kê</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={handleLoggout}>
                 <View style={[styles.navItem]}>
-                  {/*<FontAwesomeIcon color="black" size={32} icon={faUser} />*/}
                   <Text style={[styles.txtSecondaryColor]}>Đăng xuất</Text>
                 </View>
               </TouchableOpacity>
@@ -93,19 +86,20 @@ export default function VerticalNav() {
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
-          style={{
-            position: 'absolute',
-            top: 50,
-            right: 0,
-            width: 32,
-            height: 32,
-            backgroundColor: 'blue',
-          }}
+          style={[
+            {
+              width: 32,
+              height: 32,
+              borderRadius: 8,
+              marginHorizontal: 5,
+              backgroundColor: primaryBgColor,
+            },
+            styles.justMiddle,
+          ]}
           onPress={() => {
             dispatch(setVerticalNav(!verticalNav));
-            console.log(verticalNav);
           }}>
-          {/*<FontAwesomeIcon color="white" size={32} icon={faUser} />*/}
+          <MenuRegular width={32} />
         </TouchableOpacity>
       )}
     </>

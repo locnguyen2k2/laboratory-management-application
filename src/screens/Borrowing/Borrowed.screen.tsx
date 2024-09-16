@@ -14,6 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {borrowedService} from '../../services/borrowed.service.tsx';
 import Skeleton from '../../components/Skeleton.tsx';
 import {setListBorrowing} from '../../redux/borrowingReducer/borrowingSlice.tsx';
+import {Search} from '../../components/Search.tsx';
 
 export default function BorrowedScreen() {
   const dispatch = useDispatch();
@@ -31,7 +32,11 @@ export default function BorrowedScreen() {
     take: 10,
   });
 
-  const onLoadData = (page: any = null) => {
+  const onSubmit = () => {
+    onLoadData(1, filterItems.keyword);
+  };
+
+  const onLoadData = (page: any = null, keyword: string = '') => {
     dispatch(setLoading(true));
     borrowedService.getListBorrowed(page).then((res: any) => {
       if (res.meta) {
@@ -61,6 +66,14 @@ export default function BorrowedScreen() {
 
   return (
     <>
+      <View>
+        <Search
+          onSearch={(searchText: any) =>
+            setFilterItems({...filterItems, keyword: `${searchText}`})
+          }
+          onSubmit={() => onSubmit()}
+        />
+      </View>
       <Divider content={`Danh sách phiếu mượn`} />
       <View
         style={{

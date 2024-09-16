@@ -62,12 +62,14 @@ export const styles = StyleSheet.create({
   },
   modelForm: {
     zIndex: 9999,
+    top: 0,
     height: maxHeight,
     width: maxWidth,
     position: 'absolute',
     backgroundColor: 'rgba(110, 110, 110, .3)',
   },
   nav: {
+    zIndex: 9999,
     position: 'relative',
     right: -150,
     paddingVertical: 5,

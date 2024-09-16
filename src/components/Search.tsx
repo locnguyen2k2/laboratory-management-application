@@ -1,15 +1,15 @@
 import React from 'react';
-import {View, TextInput} from 'react-native';
+import {TextInput, View} from 'react-native';
 import {maxWidth} from '../constants/sizes';
 import {ButtonCusSecondary} from './ButtonCus';
 
-export const Search = ({onSearch, submit}: any) => {
+export const Search = ({onSearch, onSubmit}: any) => {
   return (
     <View>
       <View
         style={{
+          height: 50,
           width: maxWidth,
-          height: 60,
           alignItems: 'center',
           flexDirection: 'row',
           justifyContent: 'center',
@@ -20,7 +20,8 @@ export const Search = ({onSearch, submit}: any) => {
             {
               marginHorizontal: 12,
               width: '60%',
-              height: 45,
+              height: 35,
+              color: '#000000',
               borderColor: 'black',
               borderWidth: 1,
               borderRadius: 8,
@@ -30,7 +31,7 @@ export const Search = ({onSearch, submit}: any) => {
           placeholder="Nhập từ khóa tìm kiếm ..."
           onChangeText={searchText => onSearch(searchText)}
         />
-        <ButtonCusSecondary title={'Search'} handleAction={submit} />
+        <ButtonCusSecondary title={'Search'} onPress={() => onSubmit()} />
       </View>
     </View>
   );

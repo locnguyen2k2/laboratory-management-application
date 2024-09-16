@@ -24,9 +24,13 @@ export const ListCategory = (props: any) => {
       <View>{/* <Search onSearch={setSearchText} submit={onSearch} /> */}</View>
       {listCategory.length > 0 ? (
         <FlatList
-          data={[...listCategory]}
+          data={[{name: 'Tất cả', id: 0}, ...listCategory]}
           horizontal={true}
           scrollEnabled={true}
+          contentContainerStyle={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
           nestedScrollEnabled={true}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => `${index}`}

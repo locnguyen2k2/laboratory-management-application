@@ -4,27 +4,12 @@ import Item from '../Item';
 
 export const ListItem = (props: any) => {
   const [data, setData] = useState<any>([]);
-  // const [searchText, setSearchText] = useState<string>('')
-  // const onSearch = () => {
-  // const filtered = listEquipment.filter((item: any) => {
-  //     item.name.toLowerCase().includes(searchText.toLowerCase());
-  //     console.log(item.name)
-  // }
-  // );
-  // if (searchText === '') {
-  //     // return setListEquipment(listEquipment);
-  // }
 
-  // // setListEquipment(filtered);
-  // }
   useEffect(() => {
     props.data && setData(props.data);
   }, [props.data]);
   return (
     <>
-      {/* <View>
-                <Search onSearch={setSearchText} submit={onSearch} />
-            </View> */}
       {data.length > 0 ? (
         <FlatList
           data={[...data]}

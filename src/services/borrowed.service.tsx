@@ -3,7 +3,7 @@ import axios from 'axios';
 const BorrowedService = () => {
   const getListBorrowed = async (page: number) => {
     return await axios.get(
-      `registration/my-borrowing?take=5&order=DESC&page=${
+      `registration/my-borrowing?order=DESC&page=${
         page ? page : 1
       }&sort=created_at`,
     );

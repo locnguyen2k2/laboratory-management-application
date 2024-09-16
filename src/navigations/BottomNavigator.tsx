@@ -27,7 +27,7 @@ import {useState} from 'react';
 
 const Tabs = createBottomTabNavigator();
 
-export default function BottomNav() {
+export default function BottomNavigator() {
   const [isActive, setIsActive] = useState<any>('home');
 
   return (

@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setLoading} from '../../redux/loadingSlice.tsx';
 import {itemService} from '../../services/item.service.tsx';
 import {View} from 'react-native';
-import {styles} from '../../assets/styles/styles.module.tsx';
 import {
   inpWPrimary,
   maxHeight,
@@ -16,6 +15,8 @@ import {
 import Skeleton from '../../components/Skeleton.tsx';
 import Divider from '../../components/Divider.tsx';
 import {secondaryBgColor} from '../../constants/colors.tsx';
+import {Search} from '../../components/Search.tsx';
+import VerticalNav from '../../navigations/VerticalNav.tsx';
 
 export default function ListItemScreen() {
   const dispatch = useDispatch();
@@ -23,9 +24,9 @@ export default function ListItemScreen() {
   const [categoryId, setCategoryId] = useState<any>(1);
   const isLoading = useSelector((state: any) => state.loading);
   const onChangeCategoryId = (id: number) => setCategoryId(id);
-  const [title, setTitle] = useState<'thiết bị' | 'hóa chất' | 'dụng cụ'>(
-    'thiết bị',
-  );
+  const [title, setTitle] = useState<
+    'tất cả' | 'thiết bị' | 'hóa chất' | 'dụng cụ'
+  >('tất cả');
   const [filterItems, setFilterItems] = useState<any>({
     hasNext: true,
     hasPrev: false,
@@ -37,11 +38,25 @@ export default function ListItemScreen() {
     take: 10,
   });
 
-  const onLoadData = (page: any = null) => {
+  const onLoadData = (page: any = null, keyword: string = '') => {
     dispatch(setLoading(true));
     switch (categoryId) {
+      case 0:
+        itemService.getAll(page, keyword).then(async (res: any) => {
+          if (res.meta) {
+            setFilterItems({...res.meta});
+          }
+          if (res.data) {
+            dispatch(setLoading(false));
+            setTitle('tất cả');
+            page > 1 && categoryId === 0
+              ? setListItem([...listItem, ...res.data])
+              : setListItem(res.data);
+          }
+        });
+        break;
       case 1:
-        itemService.getListEquipment(page).then(async (res: any) => {
+        itemService.getListEquipment(page, keyword).then(async (res: any) => {
           if (res.meta) {
             setFilterItems({...res.meta});
           }
@@ -55,7 +70,7 @@ export default function ListItemScreen() {
         });
         break;
       case 2:
-        itemService.getListTool(page).then(async (res: any) => {
+        itemService.getListTool(page, keyword).then(async (res: any) => {
           if (res.meta) {
             setFilterItems({...res.meta});
           }
@@ -69,7 +84,7 @@ export default function ListItemScreen() {
         });
         break;
       case 3:
-        itemService.getListChemicals(page).then(async (res: any) => {
+        itemService.getListChemicals(page, keyword).then(async (res: any) => {
           if (res.meta) {
             setFilterItems({...res.meta});
           }
@@ -83,7 +98,7 @@ export default function ListItemScreen() {
         });
         break;
       default:
-        itemService.getListEquipment(page).then(async (res: any) => {
+        itemService.getListEquipment(page, keyword).then(async (res: any) => {
           if (res.meta) {
             setFilterItems({...res.meta});
           }
@@ -105,6 +120,10 @@ export default function ListItemScreen() {
     }
   };
 
+  const onSubmit = () => {
+    onLoadData(1, filterItems.keyword);
+  };
+
   useEffect(() => {
     onLoadData();
   }, [categoryId]);
@@ -112,11 +131,31 @@ export default function ListItemScreen() {
   return (
     <>
       <View
+        style={{
+          position: 'relative',
+          height: 40,
+          zIndex: 9999,
+          display: 'flex',
+          width: maxWidth,
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          backgroundColor: secondaryBgColor,
+        }}>
+        <VerticalNav />
+      </View>
+      <View
         style={[
-          styles.midBetween,
-          {height: 60, width: maxWidth, backgroundColor: secondaryBgColor},
+          {height: 40, width: maxWidth, backgroundColor: secondaryBgColor},
         ]}>
         <ListCategory onChange={onChangeCategoryId} />
+      </View>
+      <View>
+        <Search
+          onSearch={(searchText: any) =>
+            setFilterItems({...filterItems, keyword: `${searchText}`})
+          }
+          onSubmit={() => onSubmit()}
+        />
       </View>
       <Divider content={`Danh sách ${title}`} />
       <View
@@ -125,7 +164,7 @@ export default function ListItemScreen() {
           position: 'relative',
           alignItems: 'center',
           justifyContent: 'center',
-          height: maxHeight - (108 + 35 + primaryBtnHeight),
+          height: maxHeight - (108 + 35 + 55 + primaryBtnHeight),
         }}>
         {isLoading || listItem.length === 0 ? (
           <Skeleton />
@@ -133,12 +172,14 @@ export default function ListItemScreen() {
           <ListItem
             data={listItem}
             categoryId={categoryId}
+            filterItems={filterItems}
           />
         )}
       </View>
       <ButtonCusPrimary
         style={{
           bottom: 5,
+          height: 35,
           color: 'black',
           position: 'absolute',
           left: maxWidth / 2 - inpWPrimary / 2,

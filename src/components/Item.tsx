@@ -63,9 +63,8 @@ const Category = ({isActive, item}: any) => {
   return (
     <View
       style={{
-        margin: 5,
-        padding: 10,
         borderRadius: 15,
+        marginHorizontal: 5,
         width: maxWidth / 3 - 10,
         backgroundColor: isActive === item.id ? thirdBgColor : '#FFFFFF',
       }}>
