@@ -1,83 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import {
-    View, FlatList, TouchableOpacity
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '../../redux/loadingSlice';
-import { borrowedService } from '../../services/borrowed.service';
-import { maxHeight } from '../../constants/sizes';
+import React, {useEffect, useState} from 'react';
+import {FlatList, TouchableOpacity} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {setLoading} from '../../redux/loadingSlice';
+import {borrowedService} from '../../services/borrowed.service';
 import Item from '../Item';
-import { selectListBorrowing, setListBorrowing } from '../../redux/borrowingReducer/borrowingSlice';
-import IPaginate from '../../interfaces/paginate.interface';
-import { ButtonCusPrimary } from '../ButtonCus';
+import {
+  selectListBorrowing,
+  setListBorrowing,
+} from '../../redux/borrowingReducer/borrowingSlice';
 
-export const ListBorrowed = () => {
+export const ListBorrowed = (props: any) => {
+  const dispatch = useDispatch();
+  const listBorrowing = useSelector(selectListBorrowing);
+  const [detailBorrowing, setDetailBorrowing] = useState<any>([]);
+  const onLoadData = () => {
+    dispatch(setLoading(true));
+    dispatch(setListBorrowing({listBorrowing: props.data}));
+  };
 
-    const dispatch = useDispatch();
-    const listBorrowing = useSelector(selectListBorrowing)
-    const [detailBorrowing, setDetailBorrowing] = useState<any>([])
-    const [paginate, setPaginate] = useState<IPaginate>()
+  useEffect(() => {
+    let listDetail: any = new Array(props.data.length);
+    if (props.data.length > 0) {
+      dispatch(setLoading(true));
 
-    const onLoadData = () => {
-        dispatch(setLoading(true))
-        borrowedService.getListBorrowed()
-            .then((res: any) => {
-                if (res.data) {
-                    dispatch(setListBorrowing({ listBorrowing: res.data }))
-                    setPaginate(res.meta)
-                }
-            })
-    }
-
-    useEffect(() => {
-        let listDetail: any = [];
-        if (listBorrowing.length > 0) {
-            Promise.all(
-                listBorrowing.map(async (item: any) => {
-                    listDetail.push(await borrowedService.getBorrowed(item.id).then((res) => res))
-                })
-            ).then(() => {
-                dispatch(setLoading(false))
-                listDetail.length > 0 && setDetailBorrowing(listDetail)
-            })
-        } else {
-            onLoadData();
+      Promise.all(
+        props.data.map(async (item: any, index: any) => {
+          listDetail[index] = await borrowedService
+            .getBorrowed(item.id)
+            .then(res => res);
+        }),
+      ).then(() => {
+        if (listDetail.length > 0) {
+          setDetailBorrowing(listDetail);
         }
-    }, [listBorrowing || paginate])
+        dispatch(setLoading(false));
+      });
+    }
+  }, [listBorrowing]);
 
-    return (
-        <>
-            {
-                detailBorrowing.length > 0 ?
-                    <View
-                        style={{
-                            height: maxHeight,
-                            display: "flex",
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <FlatList
-                            data={detailBorrowing}
-                            numColumns={2}
-                            nestedScrollEnabled={true}
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => `${index}`}
-                            renderItem={
-                                ({ item }: any) =>
-                                    <TouchableOpacity>
-                                        <Item.Borrow item={item} />
-                                    </TouchableOpacity>
-                            }
-                        />
-                        {
-                            paginate?.hasNext && <ButtonCusPrimary title={"Tải thêm"} />
-                        }
-                    </View>
-                    : <></>
-            }
-        </>
-    )
-
-
-}
+  return (
+    <>
+      {detailBorrowing.length > 0 && (
+        <FlatList
+          data={detailBorrowing}
+          numColumns={2}
+          nestedScrollEnabled={true}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item, index) => `${index}`}
+          renderItem={({item}: any) => (
+            <TouchableOpacity>
+              <Item.Borrow item={item} />
+            </TouchableOpacity>
+          )}
+        />
+      )}
+    </>
+  );
+};

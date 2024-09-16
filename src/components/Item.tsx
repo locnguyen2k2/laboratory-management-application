@@ -1,9 +1,11 @@
 import {Text, View} from 'react-native';
 import {maxWidth} from '../constants/sizes';
 import {ItemStyle} from '../assets/styles/ItemStyle.module';
+import {styles} from '../assets/styles/styles.module.tsx';
+import {useEffect} from 'react';
+import {thirdBgColor} from '../constants/colors.tsx';
 
 const Item = ({item}: any) => {
-  console.log(item);
   return (
     <View
       style={{
@@ -56,22 +58,24 @@ const Item = ({item}: any) => {
   );
 };
 
-const Category = ({item}: any) => {
+const Category = ({isActive, item}: any) => {
+  useEffect(() => {}, [isActive]);
   return (
     <View
       style={{
         margin: 5,
-        height: 'auto',
         padding: 10,
-        display: 'flex',
         borderRadius: 15,
-        alignItems: 'flex-start',
-        backgroundColor: '#FFFFFF',
         width: maxWidth / 3 - 10,
+        backgroundColor: isActive === item.id ? thirdBgColor : '#FFFFFF',
       }}>
-      <View style={[ItemStyle.blockContent]}>
-        <Text style={[ItemStyle.title]}>Tên:</Text>
-        <Text style={[ItemStyle.content, {flex: 1}]} numberOfLines={1}>
+      <View style={[ItemStyle.blockContent, styles.justMiddle]}>
+        <Text
+          style={[
+            ItemStyle.content,
+            {color: isActive === item.id ? 'white' : 'black'},
+          ]}
+          numberOfLines={1}>
           {item.name}
         </Text>
       </View>

@@ -1,13 +1,13 @@
-import axios from "axios"
+import axios from 'axios';
 
 const CategoryService = () => {
-    const getListCategory = async () => {
-        return await axios.get('categories')
-    }
+  const getListCategory = async () => {
+    return await axios.get('categories');
+  };
 
-    return ({
-        getListCategory
-    })
-}
+  return {
+    getListCategory,
+  };
+};
 
-export const categoryService = CategoryService()
+export const categoryService = CategoryService();

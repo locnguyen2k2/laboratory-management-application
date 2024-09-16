@@ -1,14 +1,9 @@
-import React from 'react'
-import {
-    View,
-    Text
-} from 'react-native'
-import { ListBorrowed } from '../components/List/ListBorrowed'
+import React from 'react';
+import {View} from 'react-native';
 
 export default function HomeScreen() {
-    return (
-        <View>
-            <ListBorrowed />
-        </View>
-    )
+  return (
+    <View>
+    </View>
+  );
 }

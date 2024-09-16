@@ -1,0 +1,11 @@
+export {default as UserSolid} from '../assets/icons/user-solid.svg';
+export {default as UserRegular} from '../assets/icons/user-regular.svg';
+export {default as CameraSolid} from './../assets/icons/camera-solid.svg';
+export {default as CameraRegular} from './../assets/icons/camera-regular.svg';
+export {default as HomeRegular} from './../assets/icons/home-regular.svg';
+export {default as HomeSolid} from './../assets/icons/home-solid.svg';
+export {default as GoogleSolid} from '../assets/icons/google-solid.svg';
+export {default as FlaskRegular} from '../assets/icons/flask-regular.svg';
+export {default as FlaskSolid} from '../assets/icons/flask-solid.svg';
+export {default as FormSolid} from './../assets/icons/form-solid.svg';
+export {default as FormRegular} from './../assets/icons/form-regular.svg';
