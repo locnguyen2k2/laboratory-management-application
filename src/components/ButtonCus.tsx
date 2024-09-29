@@ -32,7 +32,8 @@ function ButtonCusSecondary({...props}: any) {
       style={[
         ButtonSecondaryStyle.container,
         props.fixed && styles.btnSecFixedBottom,
-      ]}>
+      ]}
+    >
       <Text style={[ButtonSecondaryStyle.title]}>{props.title}</Text>
     </TouchableOpacity>
   );

@@ -17,11 +17,12 @@ import Divider from '../../components/Divider.tsx';
 import {secondaryBgColor} from '../../constants/colors.tsx';
 import {Search} from '../../components/Search.tsx';
 import VerticalNav from '../../navigations/VerticalNav.tsx';
+import TopNavigator from '../../navigations/TopNavigator.tsx';
 
 export default function ListItemScreen() {
   const dispatch = useDispatch();
   const [listItem, setListItem] = useState<any>([]);
-  const [categoryId, setCategoryId] = useState<any>(1);
+  const [categoryId, setCategoryId] = useState<any>(0);
   const isLoading = useSelector((state: any) => state.loading);
   const onChangeCategoryId = (id: number) => setCategoryId(id);
   const [title, setTitle] = useState<
@@ -130,19 +131,8 @@ export default function ListItemScreen() {
 
   return (
     <>
-      <View
-        style={{
-          position: 'relative',
-          height: 40,
-          zIndex: 9999,
-          display: 'flex',
-          width: maxWidth,
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-          backgroundColor: secondaryBgColor,
-        }}>
-        <VerticalNav />
-      </View>
+      <TopNavigator />
+      <VerticalNav />
       <View
         style={[
           {height: 40, width: maxWidth, backgroundColor: secondaryBgColor},

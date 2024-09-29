@@ -15,6 +15,8 @@ import {borrowedService} from '../../services/borrowed.service.tsx';
 import Skeleton from '../../components/Skeleton.tsx';
 import {setListBorrowing} from '../../redux/borrowingReducer/borrowingSlice.tsx';
 import {Search} from '../../components/Search.tsx';
+import VerticalNav from '../../navigations/VerticalNav.tsx';
+import TopNavigator from '../../navigations/TopNavigator.tsx';
 
 export default function BorrowedScreen() {
   const dispatch = useDispatch();
@@ -66,6 +68,8 @@ export default function BorrowedScreen() {
 
   return (
     <>
+      <TopNavigator />
+      <VerticalNav />
       <View>
         <Search
           onSearch={(searchText: any) =>

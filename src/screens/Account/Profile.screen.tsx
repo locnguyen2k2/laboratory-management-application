@@ -4,11 +4,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {clearUser, selectUser} from '../../redux/userReducer/userSlice.tsx';
 import * as RootNavigation from '../../helps/RootNavigation';
 import {ButtonCusPrimary} from '../../components/ButtonCus.tsx';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {IUser} from '../interfaces/User.interface.ts';
 import {styles} from '../../assets/styles/styles.module.tsx';
 import {LinearGradient} from 'react-native-linear-gradient';
 import {inpWPrimary, maxWidth, radPrimary} from '../../constants/sizes.tsx';
+import {secondaryBgColor} from '../../constants/colors.tsx';
+import VerticalNav from '../../navigations/VerticalNav.tsx';
 
 export default function Profile() {
   const [userInfo, setUserInfo] = useState<IUser>();
@@ -24,6 +26,7 @@ export default function Profile() {
   }, [selectUserInfo]);
   return (
     <View style={[{flex: 1}]}>
+        <VerticalNav />
       <LinearGradient colors={['#5b74b3', '#7e91c3', '#F9F9F9']}>
         <View
           style={[

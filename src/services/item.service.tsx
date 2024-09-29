@@ -4,9 +4,9 @@ import * as _ from 'lodash';
 const ItemService = () => {
   const getAll = async (page: number, keyword: string) => {
     return await axios.get(
-      `items?keyword=${
-        !_.isEmpty(keyword) ? keyword : ''
-      }&order=DESC&page=${page ? page : 1}&sort=created_at`,
+      `items?keyword=${!_.isEmpty(keyword) ? keyword : ''}&order=DESC&page=${
+        page ? page : 1
+      }&sort=created_at`,
     );
   };
 
@@ -34,11 +34,24 @@ const ItemService = () => {
     );
   };
 
+  const getRoomItemByItem = async (
+    itemId: any,
+    page: number = 1,
+    keyword: string = '',
+  ) => {
+    return await axios.get(
+      `room-items/item/${itemId}?${keyword}&order=DESC&page=${
+        page ? page : 1
+      }&sort=created_at`,
+    );
+  };
+
   return {
     getAll,
     getListEquipment,
     getListTool,
     getListChemicals,
+    getRoomItemByItem
   };
 };
 

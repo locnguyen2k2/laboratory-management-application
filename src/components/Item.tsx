@@ -5,6 +5,21 @@ import {styles} from '../assets/styles/styles.module.tsx';
 import {useEffect} from 'react';
 import {thirdBgColor} from '../constants/colors.tsx';
 
+const itemStatus = (value: any) => {
+  switch (value) {
+    case 0:
+      return 'Bình thường';
+    case 1:
+      return 'Sử dụng tốt';
+    case 2:
+      return 'Đợi sửa';
+    case 4:
+      return 'Lỗi chức năng';
+    default:
+      return '';
+  }
+};
+
 const Item = ({item}: any) => {
   return (
     <View
@@ -34,11 +49,11 @@ const Item = ({item}: any) => {
             },
           ]}
           numberOfLines={1}>
-          {item.status}
+          {itemStatus(item.status)}
         </Text>
       </View>
       <View style={[ItemStyle.blockContent]}>
-        <Text style={[ItemStyle.title]}>Bàn giao:</Text>
+        <Text style={[ItemStyle.title]}>Đã bàn giao:</Text>
         <Text
           style={[
             ItemStyle.content,
@@ -46,12 +61,12 @@ const Item = ({item}: any) => {
               borderWidth: 0.5,
               borderRadius: 8,
               borderStyle: 'solid',
-              color: item.handoverStatus === 1 ? 'green' : 'gray',
-              borderColor: item.handoverStatus === 1 ? 'green' : 'gray',
+              color: item.handover > 0 ? 'green' : 'gray',
+              borderColor: item.handover > 0 ? 'green' : 'gray',
             },
           ]}
           numberOfLines={1}>
-          {item.handoverStatus === 1 ? 'Chưa bàn giao' : 'Đã bàn bàn'}
+          {item.handover} / {item.quantity}
         </Text>
       </View>
     </View>

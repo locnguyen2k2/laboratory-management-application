@@ -13,6 +13,7 @@ import {styles} from '../../../assets/styles/styles.module.tsx';
 import {useDispatch} from 'react-redux';
 import {setLoading} from '../../../redux/loadingSlice.tsx';
 import {maxHeight, maxWidth} from '../../../constants/sizes.tsx';
+import {setUser} from '../../../redux/userReducer/userSlice.tsx';
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ export default function LoginScreen() {
       .login({email: loginInfo.email, password: loginInfo.password})
       .then(async (res: any) => {
         (await jwtManager).set(res.access_token);
+        dispatch(setUser({...res.userInfo, isLoggedIn: true}));
         Alert.alert('Login successful');
         dispatch(setLoading(false));
         RootNavigation.navigate('Home');
@@ -60,6 +62,7 @@ export default function LoginScreen() {
         })
         .then(async (res: any) => {
           await (await jwtManager).set(res.access_token);
+          dispatch(setUser({...res.userInfo, isLoggedIn: true}));
           dispatch(setLoading(false));
           Alert.alert('Login successful');
           RootNavigation.navigate('Home');

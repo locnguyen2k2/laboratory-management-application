@@ -5,6 +5,7 @@ import {
   BorrowedScreen,
   BorrowingScreen,
   HomeScreen,
+  ItemDetail,
   ListItem,
   LoginScreen,
   ProfileScreen,
@@ -16,8 +17,6 @@ import {
   CameraSolid,
   FlaskRegular,
   FlaskSolid,
-  FormRegular,
-  FormSolid,
   HomeRegular,
   HomeSolid,
   UserRegular,
@@ -61,6 +60,16 @@ export default function BottomNavigator() {
             tabBarStyle: {
               display: 'none',
             },
+          }}
+        />
+        <Tabs.Screen
+          name="ItemDetail"
+          component={ItemDetail}
+          options={{
+            tabBarButton: () => null,
+            // tabBarStyle: {
+            //   display: 'none',
+            // },
           }}
         />
         <Tabs.Screen
@@ -125,12 +134,10 @@ export default function BottomNavigator() {
             tabPress: () => setIsActive('borrows'),
           }}
           options={{
-            tabBarIcon: () =>
-              isActive === 'borrows' ? (
-                <FormSolid width={34} />
-              ) : (
-                <FormRegular width={34} />
-              ),
+            tabBarButton: () => null,
+            tabBarStyle: {
+              display: 'none',
+            },
           }}
         />
         <Tabs.Screen

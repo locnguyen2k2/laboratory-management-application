@@ -81,8 +81,15 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
     signingConfigs {
+      release {
+                storeFile file('my-release-key.keystore')
+                storePassword '071102'
+                keyAlias 'my-release-key'
+                keyPassword '071102'
+            }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'

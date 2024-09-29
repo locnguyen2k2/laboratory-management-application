@@ -7,7 +7,7 @@ import {jwtManager} from '../helps/jwtManager';
 import {clearUser} from '../redux/userReducer/userSlice';
 import {styles} from '../assets/styles/styles.module';
 import {primaryBgColor} from '../constants/colors';
-import {CloseSolid, MenuRegular, UserSolid} from '../constants/icons.tsx';
+import {CloseSolid} from '../constants/icons.tsx';
 
 export default function VerticalNav() {
   const verticalNav = useSelector(selectVerticalNav);
@@ -21,7 +21,7 @@ export default function VerticalNav() {
 
   return (
     <>
-      {verticalNav ? (
+      {verticalNav && (
         <TouchableOpacity
           style={[styles.modelForm, {alignItems: 'flex-end'}]}
           onPress={() => {
@@ -83,23 +83,6 @@ export default function VerticalNav() {
               </TouchableOpacity>
             </FadeInView>
           </TouchableHighlight>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          style={[
-            {
-              width: 32,
-              height: 32,
-              borderRadius: 8,
-              marginHorizontal: 5,
-              backgroundColor: primaryBgColor,
-            },
-            styles.justMiddle,
-          ]}
-          onPress={() => {
-            dispatch(setVerticalNav(!verticalNav));
-          }}>
-          <MenuRegular width={32} />
         </TouchableOpacity>
       )}
     </>
