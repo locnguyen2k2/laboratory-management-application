@@ -19,7 +19,7 @@ export default function TopNavigator() {
         display: 'flex',
         width: maxWidth,
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'flex-end',
         backgroundColor: secondaryBgColor,
       }}>
       <TouchableOpacity

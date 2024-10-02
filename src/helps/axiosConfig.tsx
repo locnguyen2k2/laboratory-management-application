@@ -1,10 +1,12 @@
 import axios from 'axios';
 import {jwtManager} from './jwtManager';
+
 export default function axiosConfig() {
   axios.defaults.baseURL =
     'https://laboratory-management-system.onrender.com/apis/';
   axios.interceptors.request.use(
     async config => {
+      config.headers['Content-Type'] = 'application/json';
       const token = (await jwtManager).get();
       if (token) {
         config.headers.Authorization = 'Bearer ' + `${token}`;

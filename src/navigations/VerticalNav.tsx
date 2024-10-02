@@ -54,6 +54,15 @@ export default function VerticalNav() {
                   <CloseSolid width={'100%'} />
                 </View>
               </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  dispatch(setVerticalNav(!verticalNav));
+                  navigate('Home');
+                }}>
+                <View style={[styles.navItem]}>
+                  <Text style={[styles.txtSecondaryColor]}>Trang chủ</Text>
+                </View>
+              </TouchableOpacity>
               <TouchableOpacity>
                 <View style={[styles.navItem]}>
                   <Text style={[styles.txtSecondaryColor]}>Tài khoản</Text>

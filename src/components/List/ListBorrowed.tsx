@@ -43,7 +43,8 @@ export const ListBorrowed = (props: any) => {
       {detailBorrowing.length > 0 && (
         <FlatList
           data={detailBorrowing}
-          numColumns={2}
+          horizontal={props.row ? props.row : false}
+          numColumns={props.row ? 1 : 2}
           nestedScrollEnabled={true}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => `${index}`}

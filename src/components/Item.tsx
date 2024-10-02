@@ -5,7 +5,7 @@ import {styles} from '../assets/styles/styles.module.tsx';
 import {useEffect} from 'react';
 import {thirdBgColor} from '../constants/colors.tsx';
 
-const itemStatus = (value: any) => {
+export const itemStatus = (value: any) => {
   switch (value) {
     case 0:
       return 'Bình thường';

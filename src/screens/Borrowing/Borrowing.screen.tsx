@@ -29,7 +29,11 @@ import {
 } from '../../constants/icons.tsx';
 import * as _ from 'lodash';
 import {styles} from '../../assets/styles/styles.module.tsx';
-import {ButtonCusPrimary, ButtonCusSecondary} from '../../components/ButtonCus.tsx';
+import {
+  ButtonCusPrimary,
+  ButtonCusSecondary,
+} from '../../components/ButtonCus.tsx';
+import {borrowedService} from '../../services/borrowed.service.tsx';
 
 const itemStatus = (value: any) => {
   switch (value) {
@@ -126,6 +130,21 @@ export default function BorrowingScreen() {
     }
   };
 
+  const onCreateBorrowing = (data: any) => {
+    borrowedService
+      .createBorrowing(data)
+      .then((result: any) => {
+        if (result && result.registration) {
+          Alert.alert('Tạo đơn mượn thành công!');
+          setFormInfo({...formInfo, items: []});
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+        Alert.alert(error[0]);
+      });
+  };
+
   const onLoadRoomItem = (id: number) => {
     roomItemService
       .getDetailRoomItem(id)
@@ -186,12 +205,23 @@ export default function BorrowingScreen() {
       <VerticalNav />
       {isActive && hasPermission ? (
         device && (
-          <Camera
-            style={StyleSheet.absoluteFillObject}
-            device={device}
-            isActive={true}
-            codeScanner={codeScanner}
-          />
+          <>
+            <Camera
+              style={StyleSheet.absoluteFillObject}
+              device={device}
+              isActive={true}
+              codeScanner={codeScanner}
+            />
+            <ButtonCusSecondary
+              style={{
+                zIndex: 998,
+                color: '#ffffff',
+                backgroundColor: 'rgba(94,93,93,0.62)',
+              }}
+              title={'Hủy'}
+              onPress={() => setIsActive(false)}
+            />
+          </>
         )
       ) : (
         <>
@@ -209,6 +239,7 @@ export default function BorrowingScreen() {
               open={showStartDayPicker}
               date={formInfo.start_day}
               onConfirm={(date: any) => {
+                date.setHours(23, 59, 59, 59);
                 setShowStartDayPicker(false);
                 setFormInfo({...formInfo, start_day: date});
               }}
@@ -231,6 +262,7 @@ export default function BorrowingScreen() {
               open={showEndDayPicker}
               date={formInfo.end_day}
               onConfirm={(date: any) => {
+                date.setHours(23, 59, 59, 59);
                 setShowEndDayPicker(false);
                 setFormInfo({...formInfo, end_day: date});
               }}
@@ -360,7 +392,7 @@ export default function BorrowingScreen() {
                   backgroundColor: 'rgba(94,93,93,0.62)',
                 }}
                 title={'Thêm mới'}
-                onPress={() => setIsActive(true)}
+                onPress={() => setIsActive(!isActive)}
               />
             </View>
             <ButtonCusPrimary
@@ -371,7 +403,19 @@ export default function BorrowingScreen() {
                 backgroundColor: 'rgb(145,171,236)',
               }}
               title={'Xác nhận'}
-              // onPress={() => }
+              onPress={() =>
+                onCreateBorrowing({
+                  items: formInfo.items.map((item: any) => {
+                    return {
+                      roomItemId: item.roomItemId,
+                      quantity: item.quantity,
+                      itemStatus: item.itemStatus,
+                    };
+                  }),
+                  start_day: new Date(formInfo.start_day).valueOf(),
+                  end_day: new Date(formInfo.end_day).valueOf(),
+                })
+              }
             />
           </View>
         </>

@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const BorrowedService = () => {
-  const getListBorrowed = async (page: number) => {
+  const getListBorrowed = async (page: number, take: number = 10) => {
     return await axios.get(
       `registration/my-borrowing?order=DESC&page=${
         page ? page : 1
-      }&sort=created_at`,
+      }&sort=created_at&take=${take}`,
     );
   };
 
@@ -13,7 +13,12 @@ const BorrowedService = () => {
     return await axios.get(`registration/${id}`);
   };
 
+  const createBorrowing = async (data: any) => {
+    return await axios.post(`registration`, data);
+  };
+
   return {
+    createBorrowing,
     getListBorrowed,
     getBorrowed,
   };
