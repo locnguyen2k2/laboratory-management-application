@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {itemService} from '../../services/item.service.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {setLoading} from '../../redux/loadingSlice.tsx';
@@ -8,6 +8,9 @@ import VerticalNav from '../../navigations/VerticalNav.tsx';
 import TopNavigator from '../../navigations/TopNavigator.tsx';
 import {ItemStyle} from '../../assets/styles/ItemStyle.module.tsx';
 import {maxWidth} from '../../constants/sizes.tsx';
+import {CommonActions} from '@react-navigation/native';
+import {setHistory} from '../../redux/appSlice.tsx';
+import * as RootNavigation from './../../helps/RootNavigation';
 
 export enum UnitEnum {
   BOTTLE = 1,
@@ -29,7 +32,7 @@ export const itemUnit = (value: any) => {
     case 1:
       return 'chai';
     case 2:
-      return '';
+      return 'cái';
     case 3:
       return 'bộ';
     case 4:
@@ -39,7 +42,7 @@ export const itemUnit = (value: any) => {
     case 6:
       return 'gói';
     case 7:
-      return 'túi nhỏ';
+      return 'bọc';
     case 8:
       return 'mi-li-lít';
     case 9:
@@ -70,16 +73,37 @@ export default function ItemDetailScreen({navigation, route}: any) {
   };
 
   useEffect(() => {
-    const {itemId} = route.params;
+    const {id} = route.params;
     dispatch(setLoading(true));
-    if (itemId) {
-      onLoadRoomItem(itemId);
+    if (id) {
+      onLoadRoomItem(id);
     }
-  }, [route.params, route.params.itemId]);
+
+    let history: any = RootNavigation.navigationRef.getRootState().history;
+    history[1] = {...history[1], id: id};
+    dispatch(
+      setHistory({
+        history: history,
+      }),
+    );
+  }, [route.params, route.params.id]);
 
   return (
     <>
-      <TopNavigator />
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{name: 'Items'}],
+              }),
+            );
+          }}>
+          <Text>Quay lai</Text>
+        </TouchableOpacity>
+        <TopNavigator />
+      </View>
       <VerticalNav />
       {isLoading || listItem.length === 0 ? (
         <Skeleton />
@@ -87,10 +111,14 @@ export default function ItemDetailScreen({navigation, route}: any) {
         <View>
           <View>
             <Text style={[ItemStyle.title]}>
-              Đối tượng: {listItem[0].item.name}(
-              {listItem[0].item.category.id === 3 && listItem[0].item.volume}
-              {listItem[0].item.specification &&
-                ' ' + itemUnit(listItem[0].item.specification) + '/'}
+              {listItem[0].item.name}(
+              {listItem[0].item.category.id === 3 ||
+              listItem[0].item.category.id === 2
+                ? listItem[0].item.volume +
+                  ' ' +
+                  itemUnit(listItem[0].item.specification) +
+                  '/'
+                : ''}
               {itemUnit(listItem[0].item.unit)})
             </Text>
           </View>
@@ -111,7 +139,7 @@ export default function ItemDetailScreen({navigation, route}: any) {
                   style={[
                     ItemStyle.content,
                     {
-                      width: maxWidth - 10,
+                      width: maxWidth - 101,
                       borderWidth: 0.5,
                       borderRadius: 8,
                       borderStyle: 'solid',

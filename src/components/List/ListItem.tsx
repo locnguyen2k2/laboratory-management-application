@@ -21,7 +21,7 @@ export const ListItem = (props: any) => {
           renderItem={({item}: any) => (
             <TouchableOpacity
               onPress={() =>
-                RootNavigation.navigate('ItemDetail', {itemId: item.id})
+                RootNavigation.navigate('ItemDetail', {id: item.id})
               }>
               <Item.Item item={item} />
             </TouchableOpacity>

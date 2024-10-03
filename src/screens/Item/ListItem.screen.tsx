@@ -18,6 +18,8 @@ import {secondaryBgColor} from '../../constants/colors.tsx';
 import {Search} from '../../components/Search.tsx';
 import VerticalNav from '../../navigations/VerticalNav.tsx';
 import TopNavigator from '../../navigations/TopNavigator.tsx';
+import {setHistory} from '../../redux/appSlice.tsx';
+import * as RootNavigation from '../../helps/RootNavigation';
 
 export default function ListItemScreen() {
   const dispatch = useDispatch();
@@ -127,6 +129,11 @@ export default function ListItemScreen() {
 
   useEffect(() => {
     onLoadData();
+    dispatch(
+      setHistory({
+        history: RootNavigation.navigationRef.getRootState().history,
+      }),
+    );
   }, [categoryId]);
 
   return (

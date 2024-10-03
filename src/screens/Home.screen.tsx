@@ -10,8 +10,9 @@ import Divider from '../components/Divider.tsx';
 import {maxHeight, primaryBtnHeight} from '../constants/sizes.tsx';
 import Skeleton from '../components/Skeleton.tsx';
 import {ListBorrowed} from '../components/List/ListBorrowed.tsx';
+import {setHistory} from '../redux/appSlice.tsx';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}: any) {
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.loading);
   const [listItem, setListItem] = useState<any>([]);
@@ -29,6 +30,11 @@ export default function HomeScreen() {
 
   useEffect(() => {
     onLoadData();
+    dispatch(
+      setHistory({
+        history: navigation.getState().history,
+      }),
+    );
   }, []);
 
   return (
