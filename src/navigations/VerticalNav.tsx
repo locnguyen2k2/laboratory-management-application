@@ -8,6 +8,7 @@ import {clearUser} from '../redux/userReducer/userSlice';
 import {styles} from '../assets/styles/styles.module';
 import {primaryBgColor} from '../constants/colors';
 import {CloseSolid} from '../constants/icons.tsx';
+import {setHistory} from '../redux/appSlice.tsx';
 
 export default function VerticalNav() {
   const verticalNav = useSelector(selectVerticalNav);
@@ -56,6 +57,7 @@ export default function VerticalNav() {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
+                  dispatch(setHistory({}));
                   dispatch(setVerticalNav(!verticalNav));
                   navigate('Home');
                 }}>
@@ -70,6 +72,7 @@ export default function VerticalNav() {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
+                  dispatch(setHistory({}));
                   dispatch(setVerticalNav(!verticalNav));
                   navigate('Borrows');
                 }}>

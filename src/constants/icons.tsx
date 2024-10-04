@@ -14,3 +14,5 @@ export {default as CloseSolid} from './../assets/icons/close-solid.svg';
 export {default as RemoveCircleRegular} from '../assets/icons/add-regular.svg';
 export {default as AddCircleRegular} from '../assets/icons/remove-regular.svg';
 export {default as GoBackRegular} from '../assets/icons/go-back-regular.svg';
+export {default as ArrowLeftRegular} from '../assets/icons/arrow-left-regular.svg';
+export {default as ArrowRightRegular} from '../assets/icons/arrow-right-regular.svg';

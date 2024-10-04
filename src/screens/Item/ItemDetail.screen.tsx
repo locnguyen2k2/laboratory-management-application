@@ -63,8 +63,8 @@ export default function ItemDetailScreen({navigation, route}: any) {
   const [listItem, setListItem] = useState<any>([]);
   const isLoading = useSelector((state: any) => state.loading);
 
-  const onLoadRoomItem = async (itemId: any) => {
-    await itemService.getRoomItemByItem(itemId).then((result: any) => {
+  const onLoadRoomItem = (itemId: any) => {
+    itemService.getRoomItemByItem(itemId).then((result: any) => {
       if (result.data) {
         setListItem(result.data);
         dispatch(setLoading(false));
@@ -77,16 +77,11 @@ export default function ItemDetailScreen({navigation, route}: any) {
     dispatch(setLoading(true));
     if (id) {
       onLoadRoomItem(id);
+      let history: any = RootNavigation.navigationRef.getRootState().history;
+      history[1] = {...history[1], id: id};
+      dispatch(setHistory({history: history}));
     }
-
-    let history: any = RootNavigation.navigationRef.getRootState().history;
-    history[1] = {...history[1], id: id};
-    dispatch(
-      setHistory({
-        history: history,
-      }),
-    );
-  }, [route.params, route.params.id]);
+  }, [route.params.id, route.params]);
 
   return (
     <>
@@ -105,9 +100,7 @@ export default function ItemDetailScreen({navigation, route}: any) {
         <TopNavigator />
       </View>
       <VerticalNav />
-      {isLoading || listItem.length === 0 ? (
-        <Skeleton />
-      ) : (
+      {!isLoading && listItem.length > 0 ? (
         <View>
           <View>
             <Text style={[ItemStyle.title]}>
@@ -170,6 +163,8 @@ export default function ItemDetailScreen({navigation, route}: any) {
             )}
           />
         </View>
+      ) : (
+        <Skeleton />
       )}
     </>
   );

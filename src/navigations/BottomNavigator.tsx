@@ -33,38 +33,56 @@ const Tabs = createBottomTabNavigator();
 export default function BottomNavigator() {
   const dispatch = useDispatch();
   const selectHistory = useSelector(getHistory);
+  const [isBack, setIsBack] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<any>();
 
   const onTabClick = (tabName: any) => {
-    dispatch(setHistory({}));
+    if (
+      RootNavigation.navigationRef.getCurrentRoute()?.name.toLowerCase() !==
+      tabName
+    ) {
+      dispatch(setHistory({}));
+    }
     setIsActive(tabName);
+  };
+
+  const onBackPress = () => {
+    if (selectHistory.length > 0) {
+      const tmpTabName = selectHistory[selectHistory.length - 1];
+      const currentTab = RootNavigation.navigationRef.getCurrentRoute()?.name;
+      let id = '';
+      let tabName = `${tmpTabName}`;
+
+      if (tmpTabName.split('-').length > 1) {
+        tabName = `${tmpTabName.split('-')[0]}`;
+        id += `${tmpTabName.split('-')[1]}`;
+      }
+
+      if (currentTab !== tabName) {
+        if (id.length > 0) {
+          RootNavigation.navigate(`${tabName}`, {id: id});
+        } else {
+          RootNavigation.navigate(`${tabName}`);
+        }
+        setIsBack(true);
+        dispatch(popHistory());
+      } else {
+        setIsBack(false);
+        dispatch(popHistory());
+      }
+    }
   };
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', function () {
-      if (selectHistory.length > 0) {
-        const currentTab = RootNavigation.navigationRef.getCurrentRoute()?.name;
-        let tabName = '';
-        let id = '';
-
-        if (selectHistory[selectHistory.length - 1].split('-').length > 1) {
-          tabName += `${selectHistory[selectHistory.length - 1].split('-')[0]}`;
-          id += `${selectHistory[selectHistory.length - 1].split('-')[1]}`;
-        } else {
-          tabName += `${selectHistory[selectHistory.length - 1]}`;
-        }
-
-        if (currentTab !== tabName) {
-          if (id.length > 0) {
-            RootNavigation.navigate(`${tabName}`, {id: id});
-          } else {
-            RootNavigation.navigate(`${tabName}`);
-          }
-        }
-        dispatch(popHistory());
-      }
+      onBackPress();
       return true;
     });
+
+    if (!isBack) {
+      onBackPress();
+      setIsBack(true);
+    }
   }, [selectHistory]);
 
   return (
@@ -145,9 +163,6 @@ export default function BottomNavigator() {
           component={ItemDetail}
           options={{
             tabBarButton: () => null,
-            tabBarStyle: {
-              display: 'none',
-            },
           }}
         />
         <Tabs.Screen
@@ -173,9 +188,6 @@ export default function BottomNavigator() {
           }}
           options={{
             tabBarButton: () => null,
-            tabBarStyle: {
-              display: 'none',
-            },
           }}
         />
         <Tabs.Screen

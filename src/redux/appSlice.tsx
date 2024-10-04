@@ -11,12 +11,12 @@ export const appState = createSlice({
   reducers: {
     setHistory: (state, action) => {
       const currentHistory = state.history;
-      const getHistory: any = action.payload.history
+      const data: any = action.payload.history
         ? action.payload.history
         : RootNavigation.navigationRef.getRootState().history;
-      const tabName = getHistory[1].id
-        ? `${getHistory[1].key.split('-')[0]}-${getHistory[1].id}`
-        : getHistory[1].key.split('-')[0];
+      const tabName = data[1].id
+        ? `${data[1].key.split('-')[0]}-${data[1].id}`
+        : data[1].key.split('-')[0];
 
       if (currentHistory[currentHistory.length - 1] !== tabName) {
         if (currentHistory?.length === 10) {

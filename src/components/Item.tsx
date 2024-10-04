@@ -20,6 +20,21 @@ export const itemStatus = (value: any) => {
   }
 };
 
+export const borrowingStatus = (value: any) => {
+  switch (value) {
+    case 0:
+      return 'Chờ duyệt';
+    case 1:
+      return 'Đã duyệt';
+    case 2:
+      return 'Đã hủy';
+    case 3:
+      return 'Đã trả';
+    default:
+      return '';
+  }
+};
+
 const Item = ({item}: any) => {
   return (
     <View
@@ -117,9 +132,9 @@ const Borrow = ({item}: any) => {
         </Text>
       </View>
       <View style={[ItemStyle.blockContent]}>
-        <Text style={[ItemStyle.title]}>Tên:</Text>
+        <Text style={[ItemStyle.title]}>Ngày tạo:</Text>
         <Text style={[ItemStyle.content, {flex: 1}]} numberOfLines={1}>
-          {/*{item?.items[0].item.name}*/}
+          {item.registration.createdAt}
         </Text>
       </View>
       <View style={[ItemStyle.blockContent]}>
@@ -128,28 +143,29 @@ const Borrow = ({item}: any) => {
           style={[
             ItemStyle.content,
             {
-              color: 'black',
-            },
-          ]}
-          numberOfLines={1}>
-          {item.status}
-        </Text>
-      </View>
-      <View style={[ItemStyle.blockContent]}>
-        <Text style={[ItemStyle.title]}>Bàn giao:</Text>
-        <Text
-          style={[
-            ItemStyle.content,
-            {
               borderWidth: 1,
               borderRadius: 8,
               borderStyle: 'solid',
-              color: item.handoverStatus === 1 ? 'green' : 'gray',
-              borderColor: item.handoverStatus === 1 ? 'green' : 'gray',
+              color:
+                item.registration.status === 0
+                  ? 'orange'
+                  : item.registration.status === 1
+                  ? 'green'
+                  : item.registration.status === 2
+                  ? 'red'
+                  : 'gray',
+              borderColor:
+                item.registration.status === 0
+                  ? 'orange'
+                  : item.registration.status === 1
+                  ? 'green'
+                  : item.registration.status === 2
+                  ? 'red'
+                  : 'gray',
             },
           ]}
           numberOfLines={1}>
-          {item.handoverStatus === 1 ? 'Chưa bàn giao' : 'Đã bàn bàn'}
+          {borrowingStatus(item.registration.status)}
         </Text>
       </View>
     </View>

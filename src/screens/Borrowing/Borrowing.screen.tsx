@@ -28,12 +28,14 @@ import {
   RemoveCircleRegular,
 } from '../../constants/icons.tsx';
 import * as _ from 'lodash';
+import {isArray} from 'lodash';
 import {styles} from '../../assets/styles/styles.module.tsx';
 import {
   ButtonCusPrimary,
   ButtonCusSecondary,
 } from '../../components/ButtonCus.tsx';
 import {borrowedService} from '../../services/borrowed.service.tsx';
+import {setLoading} from '../../redux/loadingSlice.tsx';
 
 const itemStatus = (value: any) => {
   switch (value) {
@@ -131,17 +133,20 @@ export default function BorrowingScreen() {
   };
 
   const onCreateBorrowing = (data: any) => {
+    dispatch(setLoading(true));
     borrowedService
       .createBorrowing(data)
       .then((result: any) => {
         if (result && result.registration) {
           Alert.alert('Tạo đơn mượn thành công!');
           setFormInfo({...formInfo, items: []});
+          dispatch(setLoading(false));
         }
       })
       .catch((error: any) => {
+        dispatch(setLoading(false));
         console.log(error);
-        Alert.alert(error[0]);
+        Alert.alert(isArray(error) ? error[0] : error);
       });
   };
 
