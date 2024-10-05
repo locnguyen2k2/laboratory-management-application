@@ -31,7 +31,7 @@ export default function TopNavigator() {
             marginHorizontal: 5,
             backgroundColor: primaryBgColor,
           },
-          styles.justMiddle,
+          styles.midCenter,
         ]}
         onPress={() => {
           dispatch(setVerticalNav(!verticalNav));

@@ -11,7 +11,11 @@ export default function Divider(props: any) {
         width: maxWidth,
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: props.left
+          ? 'flex-start'
+          : props.right
+          ? 'flex-end'
+          : 'center',
       }}>
       <View
         style={{

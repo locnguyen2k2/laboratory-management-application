@@ -98,7 +98,7 @@ const Category = ({isActive, item}: any) => {
         width: maxWidth / 3 - 10,
         backgroundColor: isActive === item.id ? thirdBgColor : '#FFFFFF',
       }}>
-      <View style={[ItemStyle.blockContent, styles.justMiddle]}>
+      <View style={[ItemStyle.blockContent, styles.midCenter]}>
         <Text
           style={[
             ItemStyle.content,

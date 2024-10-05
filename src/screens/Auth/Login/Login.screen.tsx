@@ -14,6 +14,7 @@ import {useDispatch} from 'react-redux';
 import {setLoading} from '../../../redux/loadingSlice.tsx';
 import {maxHeight, maxWidth} from '../../../constants/sizes.tsx';
 import {setUser} from '../../../redux/userReducer/userSlice.tsx';
+import * as _ from 'lodash';
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
@@ -41,8 +42,8 @@ export default function LoginScreen() {
         RootNavigation.navigate('Home');
       })
       .catch((error: any) => {
+        Alert.alert(_.isArray(error) ? error[0] : error);
         dispatch(setLoading(false));
-        Alert.alert(error.isString ? error : error[0]);
       });
   };
   const handleLoginWithGoogle = async () => {
@@ -63,13 +64,13 @@ export default function LoginScreen() {
         .then(async (res: any) => {
           await (await jwtManager).set(res.access_token);
           dispatch(setUser({...res.userInfo, isLoggedIn: true}));
-          dispatch(setLoading(false));
           Alert.alert('Login successful');
           RootNavigation.navigate('Home');
+          dispatch(setLoading(false));
         })
         .catch((error: any) => {
-          dispatch(setLoading(false));
           Alert.alert(error);
+          dispatch(setLoading(false));
         });
     } catch (error: any) {
       dispatch(setLoading(false));
@@ -95,7 +96,7 @@ export default function LoginScreen() {
         ]}
       />
       {/* Logo */}
-      <View style={[styles.justMiddle, {flexDirection: 'row', marginTop: 100}]}>
+      <View style={[styles.midCenter, {flexDirection: 'row', marginTop: 100}]}>
         <Image
           source={CtuetLogo}
           style={{width: 76, height: 76, marginRight: 5}}
@@ -166,7 +167,7 @@ export default function LoginScreen() {
         </>
         {/* Google Login */}
         <View>
-          <View style={[styles.justMiddle, {width: '100%'}]}>
+          <View style={[styles.midCenter, {width: '100%'}]}>
             <Text style={[styles.txtPrimaryColor]}>Or better yet...</Text>
             <Text
               style={{

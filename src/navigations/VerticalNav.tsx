@@ -50,7 +50,7 @@ export default function VerticalNav() {
                       borderRadius: 8,
                       backgroundColor: `${primaryBgColor}`,
                     },
-                    styles.justMiddle,
+                    styles.midCenter,
                   ]}>
                   <CloseSolid width={'100%'} />
                 </View>

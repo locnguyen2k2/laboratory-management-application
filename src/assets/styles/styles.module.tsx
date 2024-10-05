@@ -38,6 +38,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   justMiddle: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  midCenter: {
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
