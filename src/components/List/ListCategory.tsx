@@ -8,7 +8,7 @@ import Item from '../Item';
 export const ListCategory = (props: any) => {
   const dispatch = useDispatch();
   const [listCategory, setListCategory] = useState<any>([]);
-  const [isActive, setIsActive] = useState<any>(1);
+  const [isActive, setIsActive] = useState<any>(0);
   useEffect(() => {
     dispatch(setLoading(true));
     categoryService.getListCategory().then((res: any) => {

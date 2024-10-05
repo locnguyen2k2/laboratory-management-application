@@ -23,7 +23,7 @@ export default function Divider(props: any) {
           flex: 1,
           zIndex: 997,
           marginVertical: 10,
-          backgroundColor: '#000000',
+          backgroundColor: props.color ? props.color : '#000000',
         }}></View>
 
       {props.content && (

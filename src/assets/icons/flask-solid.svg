@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg fill="#000000" width="800px" height="800px" viewBox="0 0 36 36" version="1.1"  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>flask-solid</title>
-    <path d="M31.49,27.4,23,14.94V4h1a1,1,0,0,0,0-2H12.08a1,1,0,0,0,0,2H13V14.94L4.58,27.31a4.31,4.31,0,0,0-.78,3A4.23,4.23,0,0,0,8,34H27.86A4.36,4.36,0,0,0,31,32.8,4.23,4.23,0,0,0,31.49,27.4ZM15,15.49V4h6V15.49L26.15,23H9.85Z" class="clr-i-solid clr-i-solid-path-1"></path>
-    <rect x="0" y="0" width="36" height="36" fill-opacity="0"/>
-</svg>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg fill="#3276c3" height="800px" width="800px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512" stroke="#3276c3">
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="SVGRepo_iconCarrier"> <g> <g> <g> <path d="m497.8,441.7l-40.9-254.6c-1.8-11.4-7.5-21.9-16-29.6l-31.9-29.1c-2.1-1.9-3.3-4.7-3.3-7.6v-38.5h12.1c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-126.3c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h12.1v38.5c0,2.9-1.2,5.6-3.3,7.6l-31.9,29.1c-8.5,7.8-14.2,18.3-16,29.6l-40.9,254.6c-2.4,14.8 1.8,29.8 11.6,41.2 9.7,11.4 23.9,17.9 38.9,17.9h185.5c15,0 29.2-6.5 38.9-17.9 9.6-11.4 13.8-26.5 11.4-41.2zm-205.2-248.1c0.4-2.3 1.5-4.4 3.2-5.9l31.9-29.1c10.6-9.7 16.7-23.4 16.7-37.7v-38.6h20.5v38.5c0,14.3 6.1,28.1 16.7,37.7l31.9,29.1c1.7,1.6 2.8,3.7 3.2,6l15.2,94.6h-154.4l15.1-94.6zm154.8,266.4h-185.5c-4.1,0-11-3.1-10.1-11.9l19.1-119.1h167.5l19.1,119.1c0.9,8.5-6,11.9-10.1,11.9z"/> <path d="m229.1,31.2c0-11.3-9.1-20.4-20.4-20.4h-36.9-100.7-36.9c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h16.5v378.4c0,39 31.7,70.7 70.7,70.7 39,0 70.7-31.7 70.7-70.7v-378.3h16.5c11.4,1.42109e-14 20.5-9.2 20.5-20.5zm-77.8,398.9c0,16.5-13.4,29.9-29.9,29.9-16.5,0-29.9-13.4-29.9-29.9v-378.4h59.8v378.4z"/> </g> </g> </g> </g>
+</svg>

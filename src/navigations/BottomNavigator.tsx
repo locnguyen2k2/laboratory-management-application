@@ -7,14 +7,15 @@ import {
   HomeScreen,
   ItemDetail,
   ListItem,
+  ListRoomScreen,
   LoginScreen,
   ProfileScreen,
-  RegisterScreen,
+  RegisterScreen, RoomDetail,
 } from '../screens';
 import SplashScreen from '../screens/Splash.screen';
 import {
-  CameraRegular,
-  CameraSolid,
+  AddFormRegular,
+  AddFormSolid,
   FlaskRegular,
   FlaskSolid,
   HomeRegular,
@@ -90,12 +91,11 @@ export default function BottomNavigator() {
       <Tabs.Navigator
         initialRouteName="Splash"
         screenOptions={{
-          tabBarShowLabel: false,
+          // tabBarShowLabel: false,
           headerShown: false,
           tabBarStyle: {
             height: 48,
-            position: 'relative',
-            backgroundColor: '#8fa0cb',
+            position: 'relative', // backgroundColor: '#8fa0cb',
           },
         }}>
         <Tabs.Screen
@@ -129,17 +129,32 @@ export default function BottomNavigator() {
           }}
         />
         <Tabs.Screen
+          name="Rooms"
+          component={ListRoomScreen}
+          options={{
+            tabBarButton: () => null,
+          }}
+        />
+        <Tabs.Screen
+          name="RoomDetail"
+          component={RoomDetail}
+          options={{
+            tabBarButton: () => null,
+          }}
+        />
+        <Tabs.Screen
           name="Home"
           component={HomeScreen}
           listeners={{
             tabPress: () => onTabClick('home'),
           }}
           options={{
+            title: 'Trang chủ',
             tabBarIcon: () =>
               isActive === 'home' ? (
-                <HomeSolid width={34} />
+                <HomeSolid width={32} height={28} />
               ) : (
-                <HomeRegular width={34} />
+                <HomeRegular width={32} height={28} />
               ),
           }}
         />
@@ -150,11 +165,12 @@ export default function BottomNavigator() {
             tabPress: () => onTabClick('items'),
           }}
           options={{
+            title: 'Trang thiết bị',
             tabBarIcon: () =>
               isActive === 'items' ? (
-                <FlaskSolid width={34} />
+                <FlaskSolid width={32} height={28} />
               ) : (
-                <FlaskRegular width={34} />
+                <FlaskRegular width={32} height={28} />
               ),
           }}
         />
@@ -172,11 +188,12 @@ export default function BottomNavigator() {
             tabPress: () => onTabClick('borrowing'),
           }}
           options={{
+            title: 'Mẫu phiếu mượn',
             tabBarIcon: () =>
               isActive === 'borrowing' ? (
-                <CameraSolid width={34} />
+                <AddFormSolid width={32} height={28} />
               ) : (
-                <CameraRegular width={34} />
+                <AddFormRegular width={32} height={28} />
               ),
           }}
         />
@@ -197,11 +214,12 @@ export default function BottomNavigator() {
             tabPress: () => onTabClick('profile'),
           }}
           options={{
+            title: 'Người dùng',
             tabBarIcon: () =>
               isActive === 'profile' ? (
-                <UserSolid width={34} />
+                <UserSolid width={32} height={28} />
               ) : (
-                <UserRegular width={34} />
+                <UserRegular width={32} height={28} />
               ),
           }}
         />

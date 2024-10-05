@@ -73,13 +73,12 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(110, 110, 110, .3)',
   },
   nav: {
-    zIndex: 9999,
+    zIndex: 999,
     position: 'relative',
     right: -150,
     paddingVertical: 5,
-    height: maxHeight,
+    minHeight: maxHeight,
     width: maxWidth / 2,
-    justifyContent: 'center',
     backgroundColor: `${secondaryBgColor}`,
   },
   navItem: {
@@ -88,11 +87,8 @@ export const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     marginVertical: 5,
-    paddingVertical: 5,
-    borderBottomWidth: 2,
+    padding: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomColor: '#FFFFFF',
   },
 });

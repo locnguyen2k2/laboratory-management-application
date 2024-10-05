@@ -206,7 +206,7 @@ export default function BorrowingScreen() {
 
   return (
     <>
-      <TopNavigator />
+      <TopNavigator title={'Mượn trang thiết bị'} />
       <VerticalNav />
       {isActive && hasPermission ? (
         device && (

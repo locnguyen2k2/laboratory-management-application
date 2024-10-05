@@ -6,3 +6,5 @@ export {default as BorrowingScreen} from './Borrowing/Borrowing.screen.tsx';
 export {default as BorrowedScreen} from './Borrowing/Borrowed.screen.tsx';
 export {default as ListItem} from './Item/ListItem.screen.tsx';
 export {default as ItemDetail} from './Item/ItemDetail.screen.tsx';
+export {default as ListRoomScreen} from './Room/ListRoom.screen.tsx';
+export {default as RoomDetail} from './Room/RoomDetail.screen.tsx';

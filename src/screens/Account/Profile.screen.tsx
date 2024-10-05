@@ -1,4 +1,11 @@
-import {Alert, FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  Linking,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {jwtManager} from '../../helps/jwtManager.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -50,7 +57,7 @@ export default function Profile() {
     {title: 'Cập nhật thông tin', id: 1},
     {title: 'Đổi mật khẩu', id: 2},
     {
-      title: 'Nhận thông báo',
+      title: 'Liên hệ',
       id: 3,
     },
     {title: 'Giao diện tối', id: 4},
@@ -161,7 +168,7 @@ export default function Profile() {
   }, [selectUserInfo]);
   return (
     <View style={[{flex: 1}]}>
-      <TopNavigator />
+      <TopNavigator title={'Thông tin người dùng'} />
       <VerticalNav />
       <LinearGradient colors={['#5b74b3', '#7e91c3', '#F9F9F9']}>
         <View
@@ -318,8 +325,8 @@ export default function Profile() {
                         width: 100,
                         height: 'auto',
                         padding: 6,
-                        color: 'red',
-                        borderColor: 'red', // backgroundColor: primaryBgColor,
+                        color: '#802222',
+                        borderColor: '#802222', // backgroundColor: primaryBgColor,
                       }}
                       title="Đóng"
                       onPress={() => onChangeActiveTab(item.id)}
@@ -372,8 +379,81 @@ export default function Profile() {
                         width: 100,
                         height: 'auto',
                         padding: 6,
-                        color: 'red',
-                        borderColor: 'red', // backgroundColor: primaryBgColor,
+                        color: '#802222',
+                        borderColor: '#802222', // backgroundColor: primaryBgColor,
+                      }}
+                      title="Đóng"
+                      onPress={() => onChangeActiveTab(item.id)}
+                    />
+                  </View>
+                </View>
+              )}
+              {activeTabs.find(tab => tab === item.id && tab === 3) && (
+                <View>
+                  <View style={[styles.verMgPrimary]}>
+                    <TouchableOpacity
+                      style={{display: 'flex', flexDirection: 'row'}}
+                      onPress={() =>
+                        Linking.openURL(
+                          'mailto:locnguyen071102@gmail.com?subject=SendMail&body=Description',
+                        )
+                      }>
+                      <Text>Email: </Text>
+                      <Text style={{fontStyle: 'italic'}}>
+                        locnguyen071102@gmail.com
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View
+                    style={[
+                      styles.verMgPrimary,
+                      {
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly',
+                      },
+                    ]}>
+                    <ButtonCusPrimary
+                      style={{
+                        width: 100,
+                        height: 'auto',
+                        padding: 6,
+                        color: '#802222',
+                        borderColor: '#802222', // backgroundColor: primaryBgColor,
+                      }}
+                      title="Đóng"
+                      onPress={() => onChangeActiveTab(item.id)}
+                    />
+                  </View>
+                </View>
+              )}
+              {activeTabs.find(tab => tab === item.id && tab === 6) && (
+                <View>
+                  <View style={[styles.verMgPrimary]}>
+                    <Text>
+                      Tên: Quản lý thông tin & tạo đơn mượn trang thiết bị
+                    </Text>
+                  </View>
+
+                  <View style={[styles.verMgPrimary]}>
+                    <Text>Phiên bản: v1.0.0</Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.verMgPrimary,
+                      {
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly',
+                      },
+                    ]}>
+                    <ButtonCusPrimary
+                      style={{
+                        width: 100,
+                        height: 'auto',
+                        padding: 6,
+                        color: '#802222',
+                        borderColor: '#802222', // backgroundColor: primaryBgColor,
                       }}
                       title="Đóng"
                       onPress={() => onChangeActiveTab(item.id)}

@@ -39,9 +39,9 @@ export default function HomeScreen({navigation}: any) {
 
   return (
     <>
-      <TopNavigator />
+      <TopNavigator title={'Trang chủ'} />
       <VerticalNav />
-      <Divider content={`Phiếu mượn gần đây`} />
+      <Divider left={true} content={`Phiếu mượn gần đây`} />
       <View
         style={{
           display: 'flex',

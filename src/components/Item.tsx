@@ -3,7 +3,8 @@ import {maxWidth} from '../constants/sizes';
 import {ItemStyle} from '../assets/styles/ItemStyle.module';
 import {styles} from '../assets/styles/styles.module.tsx';
 import {useEffect} from 'react';
-import {thirdBgColor} from '../constants/colors.tsx';
+import {primaryTxtColor, thirdBgColor} from '../constants/colors.tsx';
+import {FlaskRegular} from '../constants/icons.tsx';
 
 export const itemStatus = (value: any) => {
   switch (value) {
@@ -42,6 +43,7 @@ const Item = ({item}: any) => {
         margin: 5,
         height: 'auto',
         padding: 10,
+        paddingTop: 26,
         display: 'flex',
         borderRadius: 15,
         alignItems: 'flex-start',
@@ -54,15 +56,27 @@ const Item = ({item}: any) => {
           {item.name}
         </Text>
       </View>
-      <View style={[ItemStyle.blockContent]}>
-        <Text style={[ItemStyle.title]}>Trạng thái:</Text>
+      <View
+        style={[
+          ItemStyle.blockContent,
+          {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            borderTopEndRadius: 8,
+            borderBottomLeftRadius: 8,
+            backgroundColor:
+              item.status === 0
+                ? 'orange'
+                : item.status === 1
+                ? 'green'
+                : item.status === 2
+                ? 'red'
+                : 'gray',
+          },
+        ]}>
         <Text
-          style={[
-            ItemStyle.content,
-            {
-              color: 'black',
-            },
-          ]}
+          style={[ItemStyle.content, {color: primaryTxtColor}]}
           numberOfLines={1}>
           {itemStatus(item.status)}
         </Text>
@@ -112,6 +126,51 @@ const Category = ({isActive, item}: any) => {
   );
 };
 
+const Room = ({item}: any) => {
+  return (
+    <View
+      style={{
+        margin: 5,
+        height: 'auto',
+        padding: 10,
+        paddingTop: 26,
+        display: 'flex',
+        borderRadius: 15,
+        alignItems: 'flex-start',
+        backgroundColor: '#FFFFFF',
+        width: maxWidth / 2 - 10,
+      }}>
+      <View style={[ItemStyle.blockContent]}>
+        <Text style={[ItemStyle.title]}>Tên:</Text>
+        <Text style={[ItemStyle.content, {flex: 1}]} numberOfLines={1}>
+          {item.name}
+        </Text>
+      </View>
+      <View
+        style={[
+          ItemStyle.blockContent,
+          {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            borderTopEndRadius: 8,
+            borderBottomLeftRadius: 8,
+            backgroundColor: item.quantity > 0 ? 'green' : 'gray',
+          },
+        ]}>
+        <View style={{paddingHorizontal: 5}}>
+          <FlaskRegular width={18} height={18} />
+        </View>
+        <Text
+          style={[ItemStyle.content, {color: primaryTxtColor}]}
+          numberOfLines={1}>
+          {item.quantity}
+        </Text>
+      </View>
+    </View>
+  );
+};
+
 const Borrow = ({item}: any) => {
   return (
     <View
@@ -119,6 +178,7 @@ const Borrow = ({item}: any) => {
         margin: 5,
         height: 'auto',
         padding: 10,
+        paddingTop: 26,
         display: 'flex',
         borderRadius: 15,
         alignItems: 'flex-start',
@@ -137,33 +197,27 @@ const Borrow = ({item}: any) => {
           {item.registration.createdAt}
         </Text>
       </View>
-      <View style={[ItemStyle.blockContent]}>
-        <Text style={[ItemStyle.title]}>Trạng thái:</Text>
+      <View
+        style={[
+          ItemStyle.blockContent,
+          {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            borderTopEndRadius: 8,
+            borderBottomLeftRadius: 8,
+            backgroundColor:
+              item.registration.status === 0
+                ? 'orange'
+                : item.registration.status === 1
+                ? 'green'
+                : item.registration.status === 2
+                ? 'red'
+                : 'gray',
+          },
+        ]}>
         <Text
-          style={[
-            ItemStyle.content,
-            {
-              borderWidth: 1,
-              borderRadius: 8,
-              borderStyle: 'solid',
-              color:
-                item.registration.status === 0
-                  ? 'orange'
-                  : item.registration.status === 1
-                  ? 'green'
-                  : item.registration.status === 2
-                  ? 'red'
-                  : 'gray',
-              borderColor:
-                item.registration.status === 0
-                  ? 'orange'
-                  : item.registration.status === 1
-                  ? 'green'
-                  : item.registration.status === 2
-                  ? 'red'
-                  : 'gray',
-            },
-          ]}
+          style={[ItemStyle.content, {color: primaryTxtColor}]}
           numberOfLines={1}>
           {borrowingStatus(item.registration.status)}
         </Text>
@@ -176,4 +230,5 @@ export default {
   Item,
   Borrow,
   Category,
+  Room,
 };

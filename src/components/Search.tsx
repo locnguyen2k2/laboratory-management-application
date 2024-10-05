@@ -2,6 +2,7 @@ import React from 'react';
 import {TextInput, View} from 'react-native';
 import {maxWidth} from '../constants/sizes';
 import {ButtonCusSecondary} from './ButtonCus';
+import {secondaryTxtColor} from '../constants/colors.tsx';
 
 export const Search = ({onSearch, onSubmit}: any) => {
   return (
@@ -28,10 +29,11 @@ export const Search = ({onSearch, onSubmit}: any) => {
               padding: 5,
             },
           ]}
+          placeholderTextColor={'gray'}
           placeholder="Nhập từ khóa tìm kiếm ..."
           onChangeText={searchText => onSearch(searchText)}
         />
-        <ButtonCusSecondary title={'Search'} onPress={() => onSubmit()} />
+        <ButtonCusSecondary title={'Tìm'} onPress={() => onSubmit()} />
       </View>
     </View>
   );
