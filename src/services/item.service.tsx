@@ -2,11 +2,11 @@ import axios from 'axios';
 import * as _ from 'lodash';
 
 const ItemService = () => {
-  const getAll = async (page: number, keyword: string) => {
+  const getAll = async (page: number, keyword: string, take: number = 10) => {
     return await axios.get(
-      `items?keyword=${!_.isEmpty(keyword) ? keyword : ''}&order=DESC&page=${
-        page ? page : 1
-      }&sort=created_at`,
+      `items?keyword=${
+        !_.isEmpty(keyword) ? keyword : ''
+      }&take=${take}&order=DESC&page=${page ? page : 1}&sort=created_at`,
     );
   };
 
@@ -51,7 +51,7 @@ const ItemService = () => {
     getListEquipment,
     getListTool,
     getListChemicals,
-    getRoomItemByItem
+    getRoomItemByItem,
   };
 };
 

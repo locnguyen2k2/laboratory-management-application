@@ -17,7 +17,8 @@ export const ListRoom = (props: any) => {
       {data.length > 0 ? (
         <FlatList
           data={[...data]}
-          numColumns={2}
+          horizontal={props.row ? props.row : false}
+          numColumns={props.row ? 1 : 2}
           nestedScrollEnabled={true}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => `${index}`}
