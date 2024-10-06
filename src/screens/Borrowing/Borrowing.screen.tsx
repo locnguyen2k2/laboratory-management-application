@@ -30,12 +30,10 @@ import {
 import * as _ from 'lodash';
 import {isArray} from 'lodash';
 import {styles} from '../../assets/styles/styles.module.tsx';
-import {
-  ButtonCusPrimary,
-  ButtonCusSecondary,
-} from '../../components/ButtonCus.tsx';
+import {ButtonCusPrimary} from '../../components/ButtonCus.tsx';
 import {borrowedService} from '../../services/borrowed.service.tsx';
 import {setLoading} from '../../redux/loadingSlice.tsx';
+import {primaryTxtColor} from '../../constants/colors.tsx';
 
 const itemStatus = (value: any) => {
   switch (value) {
@@ -217,11 +215,18 @@ export default function BorrowingScreen() {
               isActive={true}
               codeScanner={codeScanner}
             />
-            <ButtonCusSecondary
+            <ButtonCusPrimary
               style={{
+                position: 'absolute',
+                bottom: 20,
+                left: maxWidth / 2 - 40,
+                borderWidth: 0,
+                borderRadius: 8,
                 zIndex: 998,
-                color: '#ffffff',
-                backgroundColor: 'rgba(94,93,93,0.62)',
+                width: 80,
+                height: 40,
+                color: primaryTxtColor,
+                backgroundColor: 'rgb(128,34,34)',
               }}
               title={'Hủy'}
               onPress={() => setIsActive(false)}
@@ -230,52 +235,84 @@ export default function BorrowingScreen() {
         )
       ) : (
         <>
-          <View>
-            <TouchableOpacity onPress={() => setShowStartDayPicker(true)}>
-              <Text style={{color: 'black'}}>
-                <Text>Ngày mượn:</Text>
-                {formInfo.start_day.getDate()}/
-                {formInfo.start_day.getMonth() + 1}/
-                {formInfo.start_day.getFullYear()}{' '}
-              </Text>
-            </TouchableOpacity>
-            <DatePicker
-              modal
-              open={showStartDayPicker}
-              date={formInfo.start_day}
-              onConfirm={(date: any) => {
-                date.setHours(23, 59, 59, 59);
-                setShowStartDayPicker(false);
-                setFormInfo({...formInfo, start_day: date});
-              }}
-              onCancel={() => {
-                setShowStartDayPicker(false);
-              }}
-              mode="date"
-            />
-          </View>
-          <View>
-            <TouchableOpacity onPress={() => setShowEndDayPicker(true)}>
-              <Text style={{color: 'black'}}>
-                <Text>Ngày trả:</Text>
-                {formInfo.end_day.getDate()}/{formInfo.end_day.getMonth() + 1}/
-                {formInfo.end_day.getFullYear()}{' '}
-              </Text>
-            </TouchableOpacity>
-            <DatePicker
-              modal
-              open={showEndDayPicker}
-              date={formInfo.end_day}
-              onConfirm={(date: any) => {
-                date.setHours(23, 59, 59, 59);
-                setShowEndDayPicker(false);
-                setFormInfo({...formInfo, end_day: date});
-              }}
-              onCancel={() => {
-                setShowEndDayPicker(false);
-              }}
-              mode="date"
-            />
+          <View
+            style={[
+              ItemStyle.blockContent,
+              {justifyContent: 'space-between', marginHorizontal: 5},
+            ]}>
+            <View
+              style={[
+                styles.midBetween,
+                {
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: 5,
+                  borderRadius: 8,
+                  width: maxWidth / 2 - 10,
+                  backgroundColor: '#FFFFFF',
+                },
+              ]}>
+              <TouchableOpacity
+                style={[ItemStyle.blockContent]}
+                onPress={() => setShowStartDayPicker(true)}>
+                <Text style={[ItemStyle.title]}>Ngày mượn:</Text>
+                <Text style={[ItemStyle.content]}>
+                  {formInfo.start_day.getDate()}/
+                  {formInfo.start_day.getMonth() + 1}/
+                  {formInfo.start_day.getFullYear()}{' '}
+                </Text>
+              </TouchableOpacity>
+              <DatePicker
+                modal
+                open={showStartDayPicker}
+                date={formInfo.start_day}
+                onConfirm={(date: any) => {
+                  date.setHours(23, 59, 59, 59);
+                  setShowStartDayPicker(false);
+                  setFormInfo({...formInfo, start_day: date});
+                }}
+                onCancel={() => {
+                  setShowStartDayPicker(false);
+                }}
+                mode="date"
+              />
+            </View>
+            <View
+              style={[
+                styles.midBetween,
+                {
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: 5,
+                  borderRadius: 8,
+                  width: maxWidth / 2 - 10,
+                  backgroundColor: '#FFFFFF',
+                },
+              ]}>
+              <TouchableOpacity
+                style={[ItemStyle.blockContent]}
+                onPress={() => setShowEndDayPicker(true)}>
+                <Text style={[ItemStyle.title]}>Ngày trả:</Text>
+                <Text style={[ItemStyle.content]}>
+                  {formInfo.end_day.getDate()}/{formInfo.end_day.getMonth() + 1}
+                  /{formInfo.end_day.getFullYear()}{' '}
+                </Text>
+              </TouchableOpacity>
+              <DatePicker
+                modal
+                open={showEndDayPicker}
+                date={formInfo.end_day}
+                onConfirm={(date: any) => {
+                  date.setHours(23, 59, 59, 59);
+                  setShowEndDayPicker(false);
+                  setFormInfo({...formInfo, end_day: date});
+                }}
+                onCancel={() => {
+                  setShowEndDayPicker(false);
+                }}
+                mode="date"
+              />
+            </View>
           </View>
           <View>
             {formInfo.items.length > 0 && (
@@ -291,20 +328,48 @@ export default function BorrowingScreen() {
                       margin: 5,
                       height: 'auto',
                       padding: 10,
+                      paddingTop: 25,
                       display: 'flex',
                       borderRadius: 15,
                       alignItems: 'flex-start',
                       backgroundColor: '#FFFFFF',
                       width: maxWidth / 2 - 10,
                     }}>
+                    <View
+                      style={[
+                        ItemStyle.blockContent,
+                        {
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          borderTopLeftRadius: 8,
+                          borderBottomEndRadius: 8,
+                          backgroundColor:
+                            item.itemStatus === 0
+                              ? 'orange'
+                              : item.itemStatus === 1
+                              ? 'green'
+                              : item.itemStatus === 2
+                              ? 'red'
+                              : 'gray',
+                        },
+                      ]}>
+                      <Text
+                        style={[ItemStyle.content, {color: primaryTxtColor}]}
+                        numberOfLines={1}>
+                        {itemStatus(item.itemStatus)}
+                      </Text>
+                    </View>
                     <TouchableOpacity
                       style={{
                         position: 'absolute',
                         right: 5,
                         top: 5,
                         padding: 5,
+                        borderWidth: 1.2,
+                        borderColor: '#802222',
                         borderRadius: 8,
-                        backgroundColor: 'red',
+                        backgroundColor: '#ffffff',
                       }}
                       onPress={() => onDeleteItem(item.roomItemId)}>
                       <CloseSolid width={14} height={14} />
@@ -315,19 +380,6 @@ export default function BorrowingScreen() {
                         style={[ItemStyle.content, {flex: 1}]}
                         numberOfLines={1}>
                         {item.itemName}
-                      </Text>
-                    </View>
-                    <View style={[ItemStyle.blockContent]}>
-                      <Text style={[ItemStyle.title]}>Trạng thái:</Text>
-                      <Text
-                        style={[
-                          ItemStyle.content,
-                          {
-                            color: 'black',
-                          },
-                        ]}
-                        numberOfLines={1}>
-                        {itemStatus(item.itemStatus)}
                       </Text>
                     </View>
                     <View
@@ -383,28 +435,30 @@ export default function BorrowingScreen() {
                 )}
               />
             )}
+            <TouchableOpacity
+              onPress={() => setIsActive(!isActive)}
+              style={[
+                styles.midCenter,
+                {
+                  margin: 10,
+                  width: 32,
+                  height: 32,
+                  padding: 5,
+                  borderRadius: 5,
+                  backgroundColor: '#adfab7',
+                },
+              ]}>
+              <AddCircleRegular width={20} height={20} />
+            </TouchableOpacity>
           </View>
-          <View>
-            <View style={[styles.verMgPrimary]}>
-              <View style={[styles.btnPrimaryIcon, {zIndex: 999}]}>
-                <AddCircleRegular width={14} height={14} />
-              </View>
-
-              <ButtonCusSecondary
-                style={{
-                  zIndex: 998,
-                  color: '#ffffff',
-                  backgroundColor: 'rgba(94,93,93,0.62)',
-                }}
-                title={'Thêm mới'}
-                onPress={() => setIsActive(!isActive)}
-              />
-            </View>
+          <View style={[ItemStyle.blockContent, {justifyContent: 'center'}]}>
             <ButtonCusPrimary
               style={{
                 width: 200,
                 zIndex: 998,
                 color: '#ffffff',
+                borderWidth: 0,
+                borderRadius: 8,
                 backgroundColor: 'rgb(145,171,236)',
               }}
               title={'Xác nhận'}

@@ -192,9 +192,18 @@ const Borrow = ({item}: any) => {
         </Text>
       </View>
       <View style={[ItemStyle.blockContent]}>
-        <Text style={[ItemStyle.title]}>Ngày tạo:</Text>
+        <Text style={[ItemStyle.title]}>Số lượng:</Text>
         <Text style={[ItemStyle.content, {flex: 1}]} numberOfLines={1}>
-          {item.registration.createdAt}
+          {item.items.length}
+        </Text>
+      </View>
+      <View style={[ItemStyle.blockContent]}>
+        <Text style={[ItemStyle.title]}>Tổng:</Text>
+        <Text style={[ItemStyle.content, {flex: 1}]} numberOfLines={1}>
+          {item.items.reduce(
+            (acc: number, item: any) => acc + item.quantity,
+            0,
+          )}
         </Text>
       </View>
       <View
@@ -204,23 +213,45 @@ const Borrow = ({item}: any) => {
             position: 'absolute',
             top: 0,
             right: 0,
-            borderTopEndRadius: 8,
-            borderBottomLeftRadius: 8,
-            backgroundColor:
-              item.registration.status === 0
-                ? 'orange'
-                : item.registration.status === 1
-                ? 'green'
-                : item.registration.status === 2
-                ? 'red'
-                : 'gray',
+            paddingVertical: 0,
           },
         ]}>
-        <Text
-          style={[ItemStyle.content, {color: primaryTxtColor}]}
-          numberOfLines={1}>
-          {borrowingStatus(item.registration.status)}
-        </Text>
+        <View
+          style={[
+            ItemStyle.blockContent,
+            {
+              borderBottomLeftRadius: 8,
+              borderBottomEndRadius: -2,
+              backgroundColor:
+                item.registration.status === 0
+                  ? 'orange'
+                  : item.registration.status === 1
+                  ? 'green'
+                  : item.registration.status === 2
+                  ? 'red'
+                  : 'gray',
+            },
+          ]}>
+          <Text
+            style={[ItemStyle.content, {color: primaryTxtColor}]}
+            numberOfLines={1}>
+            {borrowingStatus(item.registration.status)}
+          </Text>
+        </View>
+        <View
+          style={[
+            ItemStyle.blockContent,
+            {
+              borderTopEndRadius: 8,
+              backgroundColor: '#91abec',
+            },
+          ]}>
+          <Text
+            style={[ItemStyle.content, {color: primaryTxtColor}]}
+            numberOfLines={1}>
+            {item.registration.createdAt.split('T')[0]}
+          </Text>
+        </View>
       </View>
     </View>
   );
