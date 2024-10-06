@@ -12,12 +12,27 @@ export default function SplashScreen() {
   const [token, setToken] = useState<string | null>(null);
   const dispatch = useDispatch();
   const loadToken = async () => {
-    if ((await jwtManager).get()) {
-      setToken(`${(await jwtManager).get()}`);
-      return token;
-    } else {
-      RootNavigation.navigate('Login');
+    if ((await jwtManager).getRT()) {
+      const refreshToken: string = `${(await jwtManager).getRT()}`;
+      if ((await jwtManager).get()) {
+        setToken(`${(await jwtManager).get()}`);
+        return token;
+      } else {
+        const email = (await jwtManager).getEmail();
+        if (email) {
+          await authService
+            .genNewAT({email, refreshToken})
+            .then(async (result: any) => {
+              if (result && result.token) {
+                const newToken = result.token;
+                await (await jwtManager).set(newToken);
+                return newToken;
+              }
+            });
+        }
+      }
     }
+    RootNavigation.navigate('Login');
   };
   useEffect(() => {
     setTimeout(async () => {
@@ -30,7 +45,7 @@ export default function SplashScreen() {
               RootNavigation.navigate('Home');
             })
             .catch(async (error: any) => {
-              (await jwtManager).clear();
+              await (await jwtManager).clear();
               RootNavigation.navigate('Login');
             });
         }

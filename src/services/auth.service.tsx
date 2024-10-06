@@ -5,6 +5,9 @@ const AuthService = () => {
   const login = async (data: ILogin) => {
     return await axios.post('auths/login', data);
   };
+  const genNewAT = async (data: {email: string; refreshToken: string}) => {
+    return await axios.post('auths/refresh-token', data);
+  };
   const loginWithGoogle = async (data: ILoginWithGoogle) => {
     return await axios.post('auths/google-login', data);
   };
@@ -22,6 +25,7 @@ const AuthService = () => {
   };
   return {
     login,
+    genNewAT,
     loginWithGoogle,
     getProfile,
     fotGotPassword,

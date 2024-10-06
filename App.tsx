@@ -7,15 +7,6 @@ import {stores} from './src/redux/stores';
 import {Loading} from './src/components/Loading';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const GoBackRoutes = (routeName: string) => {
-  switch (routeName) {
-    case 'ItemDetail':
-      return 'Items';
-    default:
-      return 'Home';
-  }
-};
-
 axiosConfig();
 export default function App() {
   useEffect(() => {

@@ -35,7 +35,9 @@ export default function LoginScreen() {
     await authService
       .login({email: loginInfo.email, password: loginInfo.password})
       .then(async (res: any) => {
-        (await jwtManager).set(res.access_token);
+        await (await jwtManager).set(res.access_token);
+        await (await jwtManager).setEmail(res.userInfo.email);
+        await (await jwtManager).setRT(res.refresh_token);
         dispatch(setUser({...res.userInfo, isLoggedIn: true}));
         Alert.alert('Login successful');
         dispatch(setLoading(false));
@@ -63,6 +65,8 @@ export default function LoginScreen() {
         })
         .then(async (res: any) => {
           await (await jwtManager).set(res.access_token);
+          await (await jwtManager).setEmail(userInfo.user.email);
+          await (await jwtManager).setRT(res.refresh_token);
           dispatch(setUser({...res.userInfo, isLoggedIn: true}));
           Alert.alert('Login successful');
           RootNavigation.navigate('Home');
