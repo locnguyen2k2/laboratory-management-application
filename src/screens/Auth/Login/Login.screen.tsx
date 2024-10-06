@@ -10,14 +10,19 @@ import {CtuetLogo, LabBackground} from '../../../constants/images.tsx';
 import {GoogleSolid} from '../../../constants/icons.tsx';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {styles} from '../../../assets/styles/styles.module.tsx';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setLoading} from '../../../redux/loadingSlice.tsx';
 import {maxHeight, maxWidth} from '../../../constants/sizes.tsx';
 import {setUser} from '../../../redux/userReducer/userSlice.tsx';
 import * as _ from 'lodash';
+import {getFormSignin} from '../../../redux/appSlice.tsx';
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
+  const formError = useSelector(getFormSignin);
+
+  useEffect(() => {}, [formError]);
+
   useEffect(() => {
     GoogleSignin.configure({
       scopes: [
@@ -31,22 +36,29 @@ export default function LoginScreen() {
   }, []);
   const [loginInfo, setLoginInfo] = useState<ILogin>({email: '', password: ''});
   const handleLogin = async () => {
-    dispatch(setLoading(true));
-    await authService
-      .login({email: loginInfo.email, password: loginInfo.password})
-      .then(async (res: any) => {
-        await (await jwtManager).set(res.access_token);
-        await (await jwtManager).setEmail(res.userInfo.email);
-        await (await jwtManager).setRT(res.refresh_token);
-        dispatch(setUser({...res.userInfo, isLoggedIn: true}));
-        Alert.alert('Login successful');
-        dispatch(setLoading(false));
-        RootNavigation.navigate('Home');
-      })
-      .catch((error: any) => {
-        Alert.alert(_.isArray(error) ? error[0] : error);
-        dispatch(setLoading(false));
-      });
+    if (
+      _.isEmpty(loginInfo.email.trim()) ||
+      _.isEmpty(loginInfo.password.trim())
+    ) {
+      Alert.alert('Vui lòng nhập đủ thông tin bên dưới!');
+    } else {
+      dispatch(setLoading(true));
+      await authService
+        .login({email: loginInfo.email, password: loginInfo.password})
+        .then(async (res: any) => {
+          await (await jwtManager).set(res.access_token);
+          await (await jwtManager).setEmail(res.userInfo.email);
+          await (await jwtManager).setRT(res.refresh_token);
+          dispatch(setUser({...res.userInfo, isLoggedIn: true}));
+          Alert.alert('Login successful');
+          dispatch(setLoading(false));
+          RootNavigation.navigate('Home');
+        })
+        .catch((error: any) => {
+          Alert.alert(_.isArray(error) ? error[0] : error);
+          dispatch(setLoading(false));
+        });
+    }
   };
   const handleLoginWithGoogle = async () => {
     dispatch(setLoading(true));
@@ -123,8 +135,13 @@ export default function LoginScreen() {
         <>
           <View style={[styles.verMgPrimary]}>
             <InputCus
+              formName={'formLogin'}
               style={{margin: 12}}
               hidden={false}
+              isRequired={true}
+              isEmail={true}
+              minLength={23}
+              maxLength={320}
               placeholder="Email"
               value={loginInfo.email}
               name="email"
@@ -133,8 +150,13 @@ export default function LoginScreen() {
           </View>
           <View style={[styles.verMgPrimary]}>
             <InputCus
+              formName={'formLogin'}
               hidden={true}
+              isRequired={true}
+              isPassword={true}
               placeholder="Password"
+              minLength={6}
+              maxLength={16}
               value={loginInfo.password}
               name="password"
               handleValue={handleUserInfo}
@@ -164,7 +186,8 @@ export default function LoginScreen() {
                 color: '#FFFFFF',
                 backgroundColor: 'rgba(94,93,93,0.62)',
               }}
-              title="Sign in"
+              disabled={formError}
+              title="Đăng nhập"
               onPress={handleLogin}
             />
           </View>
@@ -172,7 +195,7 @@ export default function LoginScreen() {
         {/* Google Login */}
         <View>
           <View style={[styles.midCenter, {width: '100%'}]}>
-            <Text style={[styles.txtPrimaryColor]}>Or better yet...</Text>
+            <Text style={[styles.txtPrimaryColor]}>Hoặc</Text>
             <Text
               style={{
                 left: 5,
@@ -205,7 +228,7 @@ export default function LoginScreen() {
                 color: '#ffffff',
                 backgroundColor: 'rgba(94,93,93,0.62)',
               }}
-              title={'Continute with Google'}
+              title={'Tiếp tục với tài khoản Google'}
               onPress={handleLoginWithGoogle}
             />
           </View>

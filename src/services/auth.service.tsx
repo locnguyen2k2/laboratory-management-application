@@ -5,6 +5,9 @@ const AuthService = () => {
   const login = async (data: ILogin) => {
     return await axios.post('auths/login', data);
   };
+  const registration = async (data: any) => {
+    return await axios.post('auths/register', data);
+  };
   const genNewAT = async (data: {email: string; refreshToken: string}) => {
     return await axios.post('auths/refresh-token', data);
   };
@@ -31,6 +34,7 @@ const AuthService = () => {
     fotGotPassword,
     updateInfo,
     resetPassword,
+    registration
   };
 };
 export const authService = AuthService();

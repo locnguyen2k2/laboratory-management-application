@@ -32,10 +32,12 @@ import {authService} from '../../services/auth.service.tsx';
 import {ButtonCusPrimary} from '../../components/ButtonCus.tsx';
 import * as _ from 'lodash';
 import {setLoading} from '../../redux/loadingSlice.tsx';
+import {getFormRePass} from '../../redux/appSlice.tsx';
 
 export default function Profile() {
   const dispatch = useDispatch();
   const selectUserInfo = useSelector(selectUser);
+  const formRePassError = useSelector(getFormRePass);
 
   const [userInfo, setUserInfo] = useState<IUser>();
 
@@ -113,14 +115,23 @@ export default function Profile() {
   };
 
   const onUpdatePassword = () => {
-    dispatch(setLoading(true));
-    authService
-      .resetPassword(resetPasswordInfo)
-      .then((result: any) => onResetPassowrdCompleted(result))
-      .catch((error: any) => {
-        Alert.alert(_.isArray(error) ? error[0] : error);
-        dispatch(setLoading(false));
-      });
+    if (
+      _.isEmpty(resetPasswordInfo.oldPassword.trim()) ||
+      _.isEmpty(resetPasswordInfo.newPassword.trim()) ||
+      resetPasswordInfo.newPassword.trim() !==
+        resetPasswordInfo.oldPassword.trim()
+    ) {
+      Alert.alert('Vui lòng kiểm tra lại mật khẩu cũ và mới!');
+    } else {
+      dispatch(setLoading(true));
+      authService
+        .resetPassword(resetPasswordInfo)
+        .then((result: any) => onResetPassowrdCompleted(result))
+        .catch((error: any) => {
+          Alert.alert(_.isArray(error) ? error[0] : error);
+          dispatch(setLoading(false));
+        });
+    }
   };
 
   const onUpdateInfoCompleted = (data: any) => {
@@ -338,6 +349,8 @@ export default function Profile() {
                 <View>
                   <View style={[styles.verMgPrimary]}>
                     <InputCus
+                      formName={'formRePassword'}
+                      isPassword={true}
                       hidden={true}
                       placeholder="Mật khẩu hiện tại"
                       value={resetPasswordInfo.oldPassword}
@@ -347,6 +360,8 @@ export default function Profile() {
                   </View>
                   <View style={[styles.verMgPrimary]}>
                     <InputCus
+                      formName={'formRePassword'}
+                      isPassword={true}
                       hidden={true}
                       placeholder="Mật khẩu mới"
                       value={resetPasswordInfo.newPassword}
@@ -371,6 +386,7 @@ export default function Profile() {
                         color: primaryTxtColor,
                         borderColor: primaryTxtColor, // backgroundColor: primaryBgColor,
                       }}
+                      disabled={formRePassError}
                       title="Cập nhật"
                       onPress={onUpdatePassword}
                     />
